@@ -70,6 +70,15 @@ class AppStrings {
   static const profileListingsEmpty = 'You have not listed anything yet.';
   static const profileListingsCreate = 'List an item';
   static const profileListingsLoadMore = 'Load more listings';
+  static const publicProfileTitle = 'Profile';
+  static const publicProfileFallbackTitle = 'Public profile';
+  static const publicProfileLoading = 'Loading profile';
+  static const publicProfileUnavailable = 'This profile is unavailable.';
+  static const publicProfileLoadFailed = 'We couldn’t load this profile. Please try again.';
+  static const publicProfileListingsTitle = 'Listings';
+  static const publicProfileListingsEmpty = 'No public listings at the moment.';
+  static const publicProfileListingsLoadingMore = 'Loading more listings';
+  static const publicProfileListingsLoadMoreFailed = 'We couldn’t load more listings.';
 
   // Edit profile
   static const editProfileTitle = 'Edit profile';
@@ -79,8 +88,7 @@ class AppStrings {
   static const editProfileEmailHelper = 'Email cannot be changed here';
   static const editProfileSave = 'Save changes';
   static const editProfileSaveSuccess = 'Profile updated';
-  static const editProfileSaveFailed =
-      'Could not update profile. Please try again.';
+  static const editProfileSaveFailed = 'Could not update profile. Please try again.';
   static const editProfileUsernameNotSaved =
       'Your details were saved, but the username could not be updated. Please try the username again.';
   static const profileListingsLoadMoreFailed = 'We could not load more listings.';
@@ -94,7 +102,7 @@ class AppStrings {
   static const myOrdersRefreshFailed = 'We could not refresh your orders.';
   static const myOrdersStatusUnavailable = 'Status unavailable';
   static const myOrdersAwaitingConfirmation = 'Awaiting confirmation';
-    static const myOrdersOther = 'Other orders';
+  static const myOrdersOther = 'Other orders';
   static const myOrdersConfirmed = 'Confirmed';
   static const myOrdersDisputed = 'Disputed';
   static const myOrdersPriceUnavailable = 'Price unavailable';
@@ -169,8 +177,7 @@ class AppStrings {
   static const cameraPermissionDeniedTitle = 'Camera Access Needed';
   static const cameraPermissionDeniedMessage =
       'Camera permission is required to take photos for your item listing. Please allow camera access in your device settings to continue.';
-  static const cameraPermissionPermanentlyDeniedTitle =
-      'Camera Permission Disabled';
+  static const cameraPermissionPermanentlyDeniedTitle = 'Camera Permission Disabled';
   static const cameraPermissionPermanentlyDeniedMessage =
       'Camera access has been disabled for Cherry. Open Settings and allow camera access, then try again.';
   static const permissionTryAgain = 'Try Again';
@@ -225,7 +232,7 @@ class AppStrings {
   static const pleaseSelectCharity = 'Please select a charity';
   static const pleaseChoosePostageSize = 'Please choose a size for postage';
   static const pleaseAddPhoto = 'Please add at least one photo';
-  static const submitDonation = 'Submit Donation';
+  static const submitDonation = 'Donate';
 
   // Donation Submission
   static const donationSubmittedSuccessfully = 'Donation submitted successfully!';
@@ -249,6 +256,7 @@ class AppStrings {
   static const productPageMakeOffer = 'Make Offer';
   static const productPageBuyNow = 'Buy Now';
   static const productPageYourListing = 'Your listing';
+  static const productPageLoadFailed = 'We could not load this listing. Please try again.';
   static const giveInStyle = 'Give in style';
   static const productIncl = 'Incl.';
   static const askSeller = 'Ask seller';
@@ -381,6 +389,10 @@ class AppStrings {
   static const legalInformationText = "Legal information";
   static const privacyPolicyText = "Privacy Policy";
   static const termsAndConditionsText = "Terms and Conditions";
+  static const communityRulesText = "Community Rules";
+  static const legalAcceptanceIntroText = "I have read and agree to the";
+  static const legalAcceptanceAndText = "and";
+  static const legalAcceptanceRequiredText = "You must accept the Terms and Conditions and Community Rules.";
   static const legalDocumentLoadErrorText = "We couldn't load this legal document. Please try again.";
   static const cookieSettingsText = "Cookie settings";
   static const logOutText = "Log out";

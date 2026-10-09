@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cherry_mvp/core/config/app_strings.dart';
+import 'package:cherry_mvp/core/models/product.dart';
+import 'package:cherry_mvp/core/router/nav_provider.dart';
 import 'package:cherry_mvp/features/charity_page/charity_page.dart';
 import 'package:cherry_mvp/features/checkout/checkout_complete_page.dart';
 import 'package:cherry_mvp/features/checkout/checkout_page.dart';
@@ -11,15 +14,17 @@ import 'package:cherry_mvp/features/liked_items/liked_items_page.dart';
 import 'package:cherry_mvp/features/login/login_page.dart';
 import 'package:cherry_mvp/features/forgot_password/forgot_password_page.dart';
 import 'package:cherry_mvp/features/products/product_page.dart';
+import 'package:cherry_mvp/features/profile/public_user_profile.dart';
 import 'package:cherry_mvp/features/profile/edit_profile_page.dart';
 import 'package:cherry_mvp/features/register/register_page.dart';
 import 'package:cherry_mvp/features/search/widgets/category_page/category_page.dart';
+import 'package:cherry_mvp/features/settings/community_rules_page.dart';
 import 'package:cherry_mvp/features/settings/faq_page.dart';
 import 'package:cherry_mvp/features/settings/legal_information_page.dart';
 import 'package:cherry_mvp/features/settings/privacy_policy_page.dart';
 import 'package:cherry_mvp/features/settings/settings_page.dart';
 import 'package:cherry_mvp/features/settings/terms_and_conditions_page.dart';
-import 'package:cherry_mvp/features/welcome/welcome_page.dart';
+import 'package:cherry_mvp/features/welcome/widgets/auth_gate.dart';
 import 'package:cherry_mvp/features/welcome/widgets/post_auth_username_gate.dart';
 
 class AppRoutes {
@@ -31,6 +36,7 @@ class AppRoutes {
   static const String chat = '/chat';
   static const String discover = '/discover';
   static const String product = '/product';
+  static const String publicUserProfile = '/public-user-profile';
   static const String settingspage = '/settings';
   static const String donations = '/donations';
   static const String checkout = '/checkout';
@@ -40,6 +46,7 @@ class AppRoutes {
   static const String legalInformationPage = '/legal-information';
   static const String privacyPolicyPage = '/privacy-policy';
   static const String termsAndConditionsPage = '/terms-and-conditions';
+  static const String communityRulesPage = '/community-rules';
   static const String category = '/category';
   static const String charity = '/charity';
   static const String postageSize = '/postageSize';
@@ -50,7 +57,8 @@ class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case welcome:
-        return MaterialPageRoute(builder: (_) => const WelcomePage());
+        // Keep listening for authentication changes after a navigation reset.
+        return MaterialPageRoute(builder: (_) => const AuthGate());
       case login:
         return MaterialPageRoute(builder: (_) => const LoginPage());
       case forgotPassword:
@@ -58,7 +66,29 @@ class AppRoutes {
       case register:
         return MaterialPageRoute(builder: (_) => RegisterPage());
       case product:
-        return MaterialPageRoute(builder: (_) => ProductPage());
+        final productArgument = settings.arguments;
+        final productArgs = productArgument is Map<String, dynamic> ? productArgument : null;
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => ProductPage(
+            product: productArgument is Product ? productArgument : null,
+            productId: productArgs?['productId'] as String?,
+          ),
+        );
+      case publicUserProfile:
+        final profileArgument = settings.arguments;
+        final userId = NavigationProvider.publicProfileUserId(
+          profileArgument is String ? profileArgument : null,
+        );
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => userId == null
+              ? Scaffold(
+                  appBar: AppBar(title: const Text(AppStrings.publicProfileFallbackTitle)),
+                  body: const Center(child: Text(AppStrings.publicProfileUnavailable)),
+                )
+              : PublicUserProfile(userId: userId),
+        );
       case home:
         return MaterialPageRoute(builder: (_) => const PostAuthUsernameGate());
       case discover:
@@ -81,6 +111,8 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => const TermsAndConditionsPage(),
         );
+      case communityRulesPage:
+        return MaterialPageRoute(builder: (_) => const CommunityRulesPage());
       case checkout:
         return MaterialPageRoute(
           fullscreenDialog: true,

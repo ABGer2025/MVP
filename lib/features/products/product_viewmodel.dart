@@ -45,6 +45,14 @@ class ProductViewModel extends ChangeNotifier {
     return version == _accountStateVersion;
   }
 
+  bool isOwnProduct(Product product) {
+    _ensureCurrentAccount();
+    final currentUserId = _accountOwnerId;
+    return currentUserId != null &&
+        currentUserId.isNotEmpty &&
+        product.userId == currentUserId;
+  }
+
   // Check if a specific product is liked
   bool isProductLiked(String productId) {
     _ensureCurrentAccount();
@@ -77,8 +85,7 @@ class ProductViewModel extends ChangeNotifier {
     _ensureCurrentAccount();
     final accountStateVersion = _accountStateVersion;
     final pendingHydration = _likedProductsHydration;
-    if (pendingHydration != null &&
-        _likedProductsHydrationVersion == accountStateVersion) {
+    if (pendingHydration != null && _likedProductsHydrationVersion == accountStateVersion) {
       return pendingHydration;
     }
 
@@ -138,7 +145,9 @@ class ProductViewModel extends ChangeNotifier {
     _ensureCurrentAccount();
     final accountStateVersion = _accountStateVersion;
     final id = product.id;
-    if (id.trim().isEmpty || _pendingLikeUpdates.contains(id)) {
+    if (id.trim().isEmpty ||
+        _pendingLikeUpdates.contains(id) ||
+        (liked && isOwnProduct(product))) {
       return Result.failure('Unable to update this liked item.');
     }
 
@@ -288,7 +297,7 @@ class ProductViewModel extends ChangeNotifier {
 
   void goToProductPage(Product product) async {
     setProduct(product);
-    await navigator.navigateTo(AppRoutes.product);
+    await navigator.navigateTo(AppRoutes.product, arguments: product);
   }
 
   @override
